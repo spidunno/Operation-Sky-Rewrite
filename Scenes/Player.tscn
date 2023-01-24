@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfbt6cpthbwe1"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_ggfvq"]
+[ext_resource type="FontFile" uid="uid://c7gjwd67ax216" path="res://Assets/Fonts/ROBOTO-REGULAR.TTF" id="2_d6pxi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_krah7"]
+radius = 0.3
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qvboi"]
+specular_mode = 1
+albedo_color = Color(1, 0.309804, 0.0784314, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0g14m"]
+material = SubResource("StandardMaterial3D_qvboi")
+radius = 0.3
+height = 1.5
+radial_segments = 100
+rings = 10
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_gsb5o"]
+length = 4.0
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_ggfvq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CapsuleShape3D_krah7")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("CapsuleMesh_0g14m")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51734, 0)
+shape = SubResource("SeparationRayShape3D_gsb5o")
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+fov = 100.0
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+update_mode = 1
+extents = Vector3(50, 50, 50)
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.66185, 0)
+billboard = 1
+no_depth_test = true
+texture_filter = 5
+text = "username"
+font = ExtResource("2_d6pxi")
